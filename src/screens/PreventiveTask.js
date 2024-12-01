@@ -28,7 +28,7 @@ export default function PreventiveTask({ navigation }) {
     };
 
     const handleUpdateStatus = async (data) => {
-        const payload = { ...data, status: 'in-progress' }
+        const payload = { ...data, status: 'in_progress' }
         setLoading(false);
         try {
             setLoading(true);
@@ -47,7 +47,7 @@ export default function PreventiveTask({ navigation }) {
     const confirm = (data) => {
         Alert.alert(
             "Confirm Preventive Task",
-            `Are you sure you want to make "${data.name}" in-progress?`,
+            `Are you sure you want to make "${data.name}" in_progress?`,
             [
                 {
                     text: "Cancel",
@@ -87,7 +87,7 @@ export default function PreventiveTask({ navigation }) {
                             <Text className="text-gray-700 mb-1 text-lg">Scheduled To: {maintenance.scheduled_date_to}</Text>
                             <Text className="text-gray-700 mb-2 text-lg">Status:
                                 <Text
-                                    className={`text-white ${maintenance.status === 'in-progress' ? 'bg-blue-400'
+                                    className={`text-white ${maintenance.status === 'in_progress' ? 'bg-blue-400'
                                         : maintenance.status === 'pending' ? 'bg-yellow-400' : 'bg-emerald-400'}`}>
                                     {" " + maintenance.status.toUpperCase() + " "}
                                 </Text>
@@ -143,11 +143,11 @@ export default function PreventiveTask({ navigation }) {
                                 <Text className="text-white font-bold ml-2">In Progress</Text>
                             </TouchableOpacity>
                         )}
-                        {maintenance.status === 'in-progress' && (
+                        {maintenance.status === 'in_progress' && (
                             <TouchableOpacity
                                 onPress={() => navigation.navigate('Report Preventive', {data: maintenance})}
-                                className={`flex-row items-center p-2 rounded justify-center w-full mt-2 ${maintenance.status !== 'in-progress' ? 'bg-slate-400' : 'bg-blue-400'}`}
-                                disabled={maintenance.status !== 'in-progress'}
+                                className={`flex-row items-center p-2 rounded justify-center w-full mt-2 ${maintenance.status !== 'in_progress' ? 'bg-slate-400' : 'bg-blue-400'}`}
+                                disabled={maintenance.status !== 'in_progress'}
                             >
                                 <View className="mb-2">
                                     {loading && <ActivityIndicator color={'blue'} />}

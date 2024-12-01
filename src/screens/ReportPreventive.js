@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, TextInput, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState, useCallback } from 'react';
-import { reportPreventiveMaintenance, fetchRequestedServices, fetchPreventiveReports } from '../services/apiServices';
+import { reportPreventiveMaintenance, fetchInventory, fetchPreventiveReports } from '../services/apiServices';
 import { Picker } from '@react-native-picker/picker';
 import Toast from 'react-native-toast-message';
 import { useFocusEffect } from '@react-navigation/native';
@@ -12,14 +12,14 @@ export default function ReportPreventive({ navigation, route }) {
     const [formData, setFormData] = useState({
         preventive_id: data.id
     })
-    const [requestedServices, setRequestedServices] = useState([]);
+    const [inventory, setInventory] = useState([]);
     const [reports, setReports] = useState([]);
     const [mainDataLoading, setMainDataLoading] = useState(false);
 
     const handleSubmit = async () => {
         setLoading(false);
         // Validate form fields
-        if (!formData.service_request_id) return Toast.show({ type: 'error', text1: 'Error', text2: 'Please select equipment' });
+        if (!formData.inventory_id) return Toast.show({ type: 'error', text1: 'Error', text2: 'Please select equipment' });
         if (!formData.preventive_id) return Toast.show({ type: 'error', text1: 'Error', text2: 'Please select preventive task' });
         if (!formData.condition) return Toast.show({ type: 'error', text1: 'Error', text2: 'Condition is required' });
         if (!formData.health) return Toast.show({ type: 'error', text1: 'Error', text2: 'Health is required' });
@@ -39,13 +39,13 @@ export default function ReportPreventive({ navigation, route }) {
         }
     };
 
-    const getRequestedServices = async () => {
+    const getInventory = async () => {
         setMainDataLoading(true);
 
         try {
-            const response = await fetchRequestedServices();
-            setRequestedServices(response); // Update the state with the fetched data
-            // console.log('Available Services:', response); // Correct log after fetching data
+            const response = await fetchInventory();
+            setInventory(response); // Update the state with the fetched data
+            console.log('Available Equipment:', response); // Correct log after fetching data
         } catch (error) {
             console.log(error);
             Toast.show({ type: 'error', text1: 'Error', text2: error.message });
@@ -71,7 +71,7 @@ export default function ReportPreventive({ navigation, route }) {
 
     useFocusEffect(
         useCallback(() => {
-            getRequestedServices();
+            getInventory();
             getPreventiveReports();
         }, [])
     );
@@ -89,22 +89,22 @@ export default function ReportPreventive({ navigation, route }) {
                 <View className="mb-4 bg-white border border-gray-300 rounded-lg p-4 shadow-md">
                     <Text className="text-lg font-semibold">Equipment</Text>
                     <Picker
-                        selectedValue={formData.service_request_id}
-                        onValueChange={(value) => setFormData({ ...formData, service_request_id: value })}
+                        selectedValue={formData.inventory_id}
+                        onValueChange={(value) => setFormData({ ...formData, inventory_id: value })}
                         style={{ height: 50, width: '100%' }}
                     >
                         <Picker.Item label="Select Classification" value="" enabled={false} />
                         {/* Map over the requested services to create Picker items */}
-                        {requestedServices.map((service, index) => {
-                            // Check if service.id exists in reports' service_request_id
-                            const isDisabled = reports.some((report) => report.service_request_id === service.id);
+                        {inventory.map((item, index) => {
+                            // Check if item.id exists in reports' item_request_id
+                            {/* const isDisabled = reports.some((report) => report.item_request_id === item.id); */}
 
                             return (
                                 <Picker.Item
                                     key={index}
-                                    label={`${service.equipment[0].name} (${service.equipment[0].model}) ${isDisabled ? 'Done' : ''}`}  // Adjust based on your service object structure
-                                    value={service.id}    // Use the ID or whatever value corresponds to the classification
-                                    enabled={!isDisabled} // Disable the item if the condition matches
+                                    label={`${item.name} (${item.model}) Assigned: ${item.requested.firstname} ${item.requested.lastname}`}  // Adjust based on your item object structure
+                                    value={item.id}    // Use the ID or whatever value corresponds to the classification
+                                    // enabled={!isDisabled} // Disable the item if the condition matches
                                 />
                             );
                         })}
