@@ -12,6 +12,11 @@
       "distribution": "internal",
       "android": {
         "buildType": "apk"
+      },
+      "env": {
+        "API_URL": "https://mms-be-production.up.railway.app/api",
+        "API_KEY": "https://mms-be-production.up.railway.app",
+        "IMG_URL": "https://mms-be-production.up.railway.app"
       }
     },
     "production": {

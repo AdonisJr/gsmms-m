@@ -100,7 +100,7 @@ export default function WorkerScreen({ navigation }) {
         const { service, requested, approver } = service_request;  
 
         return (
-            <View className="flex-1 gap-2 mb-6 p-2 bg-white rounded-lg shadow">
+            <View className="flex-1 gap-2 mb-6 p-2 bg-white rounded-lg">
                 <View key={item.id}>
                     {/* Task Details */}
                     <Text className="text-xl font-bold text-gray-800">{service?.name || 'N/A'}</Text>
@@ -179,7 +179,7 @@ export default function WorkerScreen({ navigation }) {
 
 
     return (
-        <View className="flex-1 py-6 bg-gray-100 h-full">
+        <View className="flex-1 py-6 bg-gray-100">
             <Header navigation={navigation} />
             <View className="px-4 py-6 mb-16">
                 <Text className="text-2xl font-bold mb-6">My Tasks</Text>

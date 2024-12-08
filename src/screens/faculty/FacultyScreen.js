@@ -6,6 +6,7 @@ import Header from '../../components/Header';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useFocusEffect } from '@react-navigation/native';
 import { useCurrentNavStore } from '../../store/currentNavStore';
+import Loading from '../../components/Loading';
 
 export default function FacultyScreen({ navigation }) {
   const [requestedServices, setRequestedServices] = useState([]);
@@ -17,7 +18,7 @@ export default function FacultyScreen({ navigation }) {
     try {
       const response = await fetchServicesByCurrentUser();
       setRequestedServices(response); // Update the state with the fetched data
-      console.log('Available Services:', response); // Correct log after fetching data
+      // console.log('Available Services:', response); // Correct log after fetching data
     } catch (error) {
       console.log(error);
       Toast.show({ type: 'error', text1: 'Error', text2: error.message });
@@ -33,7 +34,7 @@ export default function FacultyScreen({ navigation }) {
     }, [])
   );
 
-  if (mainDataLoading) return <ActivityIndicator color={'blue'} />;
+  if (mainDataLoading) return <Loading />;
 
   return (
     <View className="flex-1 py-6">
