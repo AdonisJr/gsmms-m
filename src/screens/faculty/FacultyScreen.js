@@ -57,9 +57,12 @@ export default function FacultyScreen({ navigation }) {
               <Text className="text-gray-700 mb-2 text-lg">Status:
                 <Text
                   className={`text-white ${item.status === 'in-progress' ? 'bg-blue-400'
-                    : item.status === 'pending' ? 'bg-yellow-400' : 'bg-emerald-400'}`}>
+                    : item.status === 'pending' ? 'bg-yellow-400' : item.status === 'rejected' ? 'bg-red-400' : 'bg-emerald-400'}`}>
                   {" " + item.status + " "}
                 </Text>
+              </Text>
+              <Text className="text-gray-600 text-lg bg-slate-50 p-1">
+                Reason: {item.reason}
               </Text>
               <Text className="text-gray-600 text-lg">
                 Approved By: {item.approved_by ? `${item.approver.firstname} ${item.approver.middlename} ${item.approver.lastname}` : 'Pending'}
