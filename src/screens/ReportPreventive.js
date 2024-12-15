@@ -4,6 +4,7 @@ import { reportPreventiveMaintenance, fetchInventory, fetchPreventiveReports } f
 import { Picker } from '@react-native-picker/picker';
 import Toast from 'react-native-toast-message';
 import { useFocusEffect } from '@react-navigation/native';
+import Loading from '../components/Loading';
 
 export default function ReportPreventive({ navigation, route }) {
     const data = route.params.data;
@@ -29,7 +30,7 @@ export default function ReportPreventive({ navigation, route }) {
             const response = await reportPreventiveMaintenance(formData);
             Toast.show({ type: 'success', text1: 'Success', text2: 'Request submitted successfully' });
             setTimeout(() => {
-                navigation.goBack();
+                navigation.goBack(); 
             }, 1000);
         } catch (error) {
             console.log(error)
@@ -76,6 +77,8 @@ export default function ReportPreventive({ navigation, route }) {
         }, [])
     );
 
+    mainDataLoading && <Loading />
+
     return (
         <View>
             <View className="py-4 ps-4 sticky bg-white">
@@ -93,7 +96,7 @@ export default function ReportPreventive({ navigation, route }) {
                         onValueChange={(value) => setFormData({ ...formData, inventory_id: value })}
                         style={{ height: 50, width: '100%' }}
                     >
-                        <Picker.Item label="Select Classification" value="" enabled={false} />
+                        <Picker.Item label="Select Equipment" value="" enabled={false} />
                         {/* Map over the requested services to create Picker items */}
                         {inventory.map((item, index) => {
                             // Check if item.id exists in reports' item_request_id
@@ -102,7 +105,7 @@ export default function ReportPreventive({ navigation, route }) {
                             return (
                                 <Picker.Item
                                     key={index}
-                                    label={`${item.name} (${item.model}) Assigned: ${item.requested.firstname} ${item.requested.lastname}`}  // Adjust based on your item object structure
+                                    label={`${item.name} (${item.model}) Assigned: ${item?.requested?.firstname} ${item?.requested?.lastname}`}  // Adjust based on your item object structure
                                     value={item.id}    // Use the ID or whatever value corresponds to the classification
                                     // enabled={!isDisabled} // Disable the item if the condition matches
                                 />
@@ -148,6 +151,7 @@ export default function ReportPreventive({ navigation, route }) {
                 </TouchableOpacity>
             </ScrollView>
             <Toast />
+            {loading && <Loading />}
         </View>
     )
 }
