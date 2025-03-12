@@ -395,3 +395,28 @@ export const notifMarkAsRead = async (id) => {
         throw new Error('Failed to to update isRead')
     }
 }
+
+// Comments
+
+export const fetchComments = async (id) => {
+    try {
+        const response = await apiClient.get(`/comments/${id}`)
+        // console.log('response data: ', response.data)
+        return response.data;
+    } catch (error) {
+        console.log('apiServices/fetchComments : ', error.response.data.message)
+        throw new Error('Failed to fetch comments')
+    }
+} 
+
+export const postComment = async (payload) => {
+    console.log(payload)
+    try {
+        const response = await apiClient.post(`/comments`, payload)
+        // console.log('response data: ', response.data)
+        return response.data;
+    } catch (error) {
+        console.log('apiServices/postComment : ', error.response.data.message)
+        throw new Error('Failed to post comment')
+    }
+} 

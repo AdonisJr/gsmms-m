@@ -52,6 +52,7 @@ import EditRequestedServices from './src/screens/faculty/EditRequestedServices';
 import NotificationScreen from './src/screens/NotificationScreen';
 import PreventiveTask from './src/screens/PreventiveTask';
 import ReportPreventive from './src/screens/ReportPreventive';
+import Comments from './src/screens/faculty/Comments';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -184,6 +185,7 @@ export default function App() {
         <Stack.Screen name="Notifications" component={NotificationScreen} />
         <Stack.Screen name="Request Services" component={RequestServices} />
         <Stack.Screen name="Report Preventive" component={ReportPreventive} />
+        <Stack.Screen name="Comments" component={Comments} />
 
       </Stack.Navigator>
     </NavigationContainer>

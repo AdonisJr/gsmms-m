@@ -47,7 +47,8 @@ export default function FacultyScreen({ navigation }) {
         keyExtractor={(item) => item.id.toString()} // Use item.id as key
         renderItem={({ item }) => (
 
-          <View className="flex-row justify-between items-center mb-6 p-4 bg-white rounded-lg shadow">
+          <View className="flex-col justify-between mb-6 p-4 bg-white rounded-lg shadow"
+          >
             <View style={{ flex: 1 }}>
               <Text className="text-xl font-bold text-gray-800">{item.service.name}</Text>
               <Text className="text-gray-600 mb-2 text-lg">Description: {item.description}</Text>
@@ -87,14 +88,18 @@ export default function FacultyScreen({ navigation }) {
                           {worker.firstname ? `${worker.firstname} ${worker.lastname} ( ${worker.department} )` : 'N/A'}
                         </Text>
                       ))
+
                   }
                 </View>
               </View>
 
             </View>
+            <TouchableOpacity className="mb-5 pl-10" onPress={() => navigation.navigate('Comments', { data: item })}>
+              <Text>Comments ({item.comments.length})</Text>
+            </TouchableOpacity>
             <TouchableOpacity
               onPress={() => navigation.navigate('Edit Requested Services', { data: item })}
-              className={`flex-row items-center p-2 rounded bg-blue-400`}
+              className={`flex-row justify-center items-center p-2 rounded bg-blue-400`}
             >
               <MaterialIcons name="edit" size={15} color="white" />
               <Text className="text-white font-bold ml-1">Edit</Text>
